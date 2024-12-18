@@ -47,8 +47,8 @@ def create_crewmember():
     name = input("Enter CrewMember's name: ")
     ability = input("Enter CrewMember's ability: ")
     dream = input("Enter CrewMember's dream: ")
-    bounty = int("Enter CrewMember's bounty: ")
-    role_id = int("Enter Role ID: ")
+    bounty = int(input("Enter CrewMember's bounty: "))
+    role_id = int(input("Enter Role ID: "))
     role = (Role, role_id)
 
     if not role:
@@ -61,7 +61,7 @@ def create_crewmember():
 
 
 def update_crewmember():
-    crewmember_id = int("Enter CrewMembers ID to update: ")
+    crewmember_id = int(input("Enter CrewMembers ID to update: "))
     crewmember = session.get(CrewMember, crewmember_id)
 
     if not crewmember:
@@ -81,5 +81,17 @@ def update_crewmember():
     session.commit()
     print(f"The Stawhat {crewmember_id} updated successfully")
 
+def delete_crewmember():
+    crewmember_id = int(input("Enter CrewMember's ID to delete: "))
+    crewmember = session.get(CrewMember, crewmember_id)
+    if not crewmember:
+        print(f"The Strawhat with ID {crewmember_id} does not exist")
+        return
+    session.delete(crewmember)
+    session.commit()
+    print(f"the Strawhat {crewmember_id} deleted successfully!!")
+
+def assign_crewmember():
+    studen
 
     
