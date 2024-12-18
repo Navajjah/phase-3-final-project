@@ -104,6 +104,13 @@ def assign_crewmember():
     session.commit()
     print("Role assigned successfully!!")
 
+def list_roles():
+    crewmembers = session.query(CrewMember).all()
+    if not crewmembers:
+        print("No Strawhats found")
+    for crewmember in crewmembers:
+        print(crewmember)
+
 
 
 
