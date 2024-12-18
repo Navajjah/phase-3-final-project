@@ -92,6 +92,19 @@ def delete_crewmember():
     print(f"the Strawhat {crewmember_id} deleted successfully!!")
 
 def assign_crewmember():
-    studen
+    crewmember_id = int(input("Enter CrewMember's ID: "))
+    role_id = int(input("Enter the new Role ID: "))
+    crewmember = session.get(CrewMember, crewmember_id)
+    role = session.get(Role, role_id)
+
+    if not crewmember or not role:
+        print("Invalid Strawhat ID or Role ID")
+        return
+    crewmember.role_id = role_id
+    session.commit()
+    print("Role assigned successfully!!")
+
+
+
 
     
