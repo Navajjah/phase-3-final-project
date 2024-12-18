@@ -139,7 +139,7 @@ def view_crewmembers_by_roles():
 
 def main_menu():
     while True:
-        print("\n 🏴‍☠️ Welcome to the Strawhat crew. What would you like to do?")
+        print("\n 🌟Welcome aboard the Thousand Sunny, the ship of dreams and nakama!🌟 What would you like to do?")
         print("1. Create a Role")
         print("2. Update a Role")
         print("3. Delete a Role")
