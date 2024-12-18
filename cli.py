@@ -43,3 +43,25 @@ def delete_role():
     session.commit()
     print(f"Role ID {role_id} has been deleted successfully!!")
 
+def create_crewmember():
+    name = input("Enter CrewMember's name: ")
+    ability = input("Enter CrewMember's ability: ")
+    dream = input("Enter CrewMember's dream: ")
+    bounty = int("Enter CrewMember's bounty: ")
+    role_id = int("Enter Role ID: ")
+    role = (Role, role_id)
+    if not role:
+        print(f"Role with ID {role_id} does not exist")
+        return
+    crewmember = CrewMember(name=name, ability=ability, dream=dream, bounty=bounty)
+    session.add(crewmember)
+    session.commit()
+    print(f"🏴‍☠️ A new Straw Hat has joined! '{name}' (ID: {crewmember.id}) is now part of the adventure as a '{role_id}'! 🌟")
+
+
+def update_crewmember():
+    crewmember_id = int("Enter CrewMembers ID to update: ")
+    crewmember = session.get(CrewMember, crewmember_id)
+
+    if not crewmember:
+        print(f"The Strawhat")
