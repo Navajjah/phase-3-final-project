@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from model import Base, Role, CrewMember
+import sys
 
 database = "sqlite:///strawhatcrew.db"
 engine = create_engine(database)
@@ -160,6 +161,19 @@ def main_menu():
             update_crewmember()
         elif option == "6":
             delete_crewmember()
-        
+        elif option == "7":
+            assign_crewmember()
+        elif option == "8":
+            list_roles()
+        elif option == "9":
+            list_crewmembers()
+        elif option == "10":
+            view_crewmembers_by_roles()
+        elif option == "11":
+            print("You are now exiting the Thousand Sunny.....\n To be continued")
+            sys.exit()
+        else: 
+            print("Invalid choice. Please try again.")
+
             
     
