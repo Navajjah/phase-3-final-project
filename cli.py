@@ -29,7 +29,17 @@ def update_role():
     role.name = input(f"Enter new Role (current: {role.name}): ")
     role.skills = input(f"Enter new skills (current: {role.skills}): ")
     role.duties = input(f"Enter new duties (current: {role.duties}): ")
+    session.commit()
     print(f"Role ID {role_id} updated successfully!!")
 
 def delete_role():
-    role_id = int(input("Enter Role ID to delete"))
+    role_id = int(input("Enter Role ID to delete: "))
+    role = session.get(Role, role_id)
+
+    if not role:
+        print(f"Role with ID {role_id} does not exist")
+        return
+    session.delete(role)
+    session.commit()
+    print(f"Role ID {role_id} has been deleted successfully!!")
+
