@@ -105,6 +105,13 @@ def assign_crewmember():
     print("Role assigned successfully!!")
 
 def list_roles():
+    roles = session.query(Role).all()
+    if not roles:
+        print("No roles found")
+    for role in roles:
+        print(role)
+
+def list_crewmembers():
     crewmembers = session.query(CrewMember).all()
     if not crewmembers:
         print("No Strawhats found")
@@ -125,6 +132,34 @@ def view_crewmembers_by_roles():
     for crewmember in crewmembers:
         print(crewmember)
 
+def main_menu():
+    while True:
+        print("\n Welcome to the Strawhat crew. What would you like to do?")
+        print("1. Create a Role")
+        print("2. Update a Role")
+        print("3. Delete a Role")
+        print("4. Create a CrewMember")
+        print("5. Update a CrewMember")
+        print("6. Delete a CrewMember")
+        print("7. Assign CrewMember to a role")
+        print("8. List Roles")
+        print("9. List CrewMembers")
+        print("10. View Roles by CrewMembers")
+        print("11. Exit")
+        option = input("Enter your choice: ")
 
-
+        if option == "1":
+            create_role()
+        elif option == "2":
+            update_role()
+        elif option == "3":
+            delete_role()
+        elif option == "4":
+            create_crewmember()
+        elif option == "5":
+            update_crewmember()
+        elif option == "6":
+            delete_crewmember()
+        
+            
     
