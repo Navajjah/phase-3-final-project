@@ -111,6 +111,19 @@ def list_roles():
     for crewmember in crewmembers:
         print(crewmember)
 
+def view_crewmembers_by_roles():
+    role_id = int(input("Enter Role ID to view crewmembers: "))
+    role = session.get(Role, role_id)
+    if not role:
+        print(f"Role with ID {role_id} does not exist")
+        return
+    crewmembers = role.members
+    if not crewmembers:
+        print(f"No Strawhats found for role {role_id}")
+        return
+    print(f"Strawhats belonging to '{role.name}' (ID {role_id}): ")
+    for crewmember in crewmembers:
+        print(crewmember)
 
 
 
