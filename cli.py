@@ -50,6 +50,7 @@ def create_crewmember():
     bounty = int("Enter CrewMember's bounty: ")
     role_id = int("Enter Role ID: ")
     role = (Role, role_id)
+
     if not role:
         print(f"Role with ID {role_id} does not exist")
         return
@@ -64,4 +65,21 @@ def update_crewmember():
     crewmember = session.get(CrewMember, crewmember_id)
 
     if not crewmember:
-        print(f"The Strawhat")
+        print(f"The Strawhat with ID {crewmember_id} does not exist")
+        return
+    crewmember.name = input("Enter new CrewMember's name: (current: {crewmember.name}): ")
+    crewmember.ability = input("Enter new CrewMember's ability: (current: {crewmember.ability}): ")
+    crewmember.dream = input("Enter new CrewMember's dream: (current: {crewmember.dream}): ")
+    crewmember.bounty = input("Enter new CrewMember's bounty: (current: {crewmember.bounty}): ")
+    new_role_id = input("Enter new Role ID for CrewMember: (current: {crewmember.role_id}): ")
+    if new_role_id:
+        new_role = session.get(Role, int(new_role_id))
+        if not new_role:
+            print(f"The Role with ID {new_role_id} does not exist. Skipping Role update")
+        else:
+            crewmember.role_id = new_role_id
+    session.commit()
+    print(f"The Stawhat {crewmember_id} updated successfully")
+
+
+    
