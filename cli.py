@@ -16,13 +16,17 @@ def create_role():
     name = input("Enter Role: ")
     skills = input("Enter Skills: ")
     duties = input("Enter duties: ")
+    existing_role = session.query(Role).filter_by(name=name).first()
+    if existing_role:
+        print(f"Role with name '{name}' already exists. No action taken.")
+        return
     role = Role(name=name, skills=skills, duties=duties)
     session.add(role)
     session.commit()
     print(f"Role '{name}' created with ID {role.id}")
 
 def update_role():
-    role_id = int("Enter Role ID to update: ")
+    role_id = int(input("Enter Role ID to update: "))
     role = session.get(Role, role_id)
     if not role:
         print(f"Role with ID {role_id} does not exist")
@@ -50,12 +54,12 @@ def create_crewmember():
     dream = input("Enter CrewMember's dream: ")
     bounty = int(input("Enter CrewMember's bounty: "))
     role_id = int(input("Enter Role ID: "))
-    role = (Role, role_id)
+    role = session.get(Role, role_id)
 
     if not role:
         print(f"Role with ID {role_id} does not exist")
         return
-    crewmember = CrewMember(name=name, ability=ability, dream=dream, bounty=bounty)
+    crewmember = CrewMember(name=name, ability=ability, dream=dream, bounty=bounty, role_id=role_id)
     session.add(crewmember)
     session.commit()
     print(f"🏴‍☠️ A new Straw Hat has joined! '{name}' (ID: {crewmember.id}) is now part of the adventure as a '{role_id}'! 🌟")
@@ -68,11 +72,11 @@ def update_crewmember():
     if not crewmember:
         print(f"The Strawhat with ID {crewmember_id} does not exist")
         return
-    crewmember.name = input("Enter new CrewMember's name: (current: {crewmember.name}): ")
-    crewmember.ability = input("Enter new CrewMember's ability: (current: {crewmember.ability}): ")
-    crewmember.dream = input("Enter new CrewMember's dream: (current: {crewmember.dream}): ")
-    crewmember.bounty = input("Enter new CrewMember's bounty: (current: {crewmember.bounty}): ")
-    new_role_id = input("Enter new Role ID for CrewMember: (current: {crewmember.role_id}): ")
+    crewmember.name = input(f"Enter new CrewMember's name: (current: {crewmember.name}): ")
+    crewmember.ability = input(f"Enter new CrewMember's ability: (current: {crewmember.ability}): ")
+    crewmember.dream = input(f"Enter new CrewMember's dream: (current: {crewmember.dream}): ")
+    crewmember.bounty = int(input(f"Enter new CrewMember's bounty: (current: {crewmember.bounty}): "))
+    new_role_id = int(input(f"Enter new Role ID for CrewMember: (current: {crewmember.role_id}): "))
     if new_role_id:
         new_role = session.get(Role, int(new_role_id))
         if not new_role:
@@ -135,7 +139,7 @@ def view_crewmembers_by_roles():
 
 def main_menu():
     while True:
-        print("\n Welcome to the Strawhat crew. What would you like to do?")
+        print("\n 🏴‍☠️ Welcome to the Strawhat crew. What would you like to do?")
         print("1. Create a Role")
         print("2. Update a Role")
         print("3. Delete a Role")
@@ -170,10 +174,13 @@ def main_menu():
         elif option == "10":
             view_crewmembers_by_roles()
         elif option == "11":
-            print("You are now exiting the Thousand Sunny.....\n To be continued")
+            print("You are now exiting the Thousand Sunny⛵..... To be continued")
             sys.exit()
         else: 
             print("Invalid choice. Please try again.")
 
-            
+if __name__ == "__main__":
+    init_db()
+    main_menu()
+
     

@@ -11,7 +11,7 @@ class Role(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String, unique=True, nullable=False)
     skills = Column(String, nullable=False)
-    duties = Column(String,nullable=True)
+    duties = Column(String, nullable=True)
 
     members = relationship('CrewMember', back_populates='role')
 
@@ -19,7 +19,7 @@ class Role(Base):
         return f"Role(id = {self.id}, name = '{self.name}, skills ='{self.skills}, duties ='{self.duties}')"
     
 class CrewMember(Base):
-    __tablename__ = 'CrewMember'
+    __tablename__ = 'crewmembers'
 
     id = Column(Integer, primary_key=True)
     name= Column(String, nullable=False)
