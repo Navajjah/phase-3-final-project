@@ -180,6 +180,23 @@ def delete_ship():
     session.commit()
     print(f"🚢 Ship ID {ship_id} has been deleted!")
 
+def assign_crewmember_to_ship():
+    crewmember_id = int(input("Enter CrewMember's ID: "))
+    ship_id = int(input("Enter Ship ID: "))
+    crewmember = session.get(CrewMember, crewmember_id)
+    ship = session.get(Ship, ship_id)
+
+    if not crewmember:
+        print(f"No crewmember found with ID {crewmember_id}")
+        return
+    if not ship:
+        print(f"No ship found with ID {ship_id}")
+        return
+    
+    crewmember.ship_id = ship_id
+    session.commit()
+    print(f"CrewMember '{crewmember.name}' has been assigned to the ship '{ship.name}' successfully!")
+
 
 def list_ships():
     ships = session.query(Ship).all()
@@ -207,8 +224,9 @@ def main_menu():
         print("11. Create a Ship")
         print("12. Update a ship")
         print("13. Delete a ship")
-        print("14. List ships")
-        print("15. Exit")
+        print("14. Assign a crewmember to a ship")
+        print("15. List ships")
+        print("16. Exit")
         option = input("Enter your choice: ")
 
         if option == "1":
@@ -236,8 +254,10 @@ def main_menu():
         elif option == "13":
             delete_ship()
         elif option == "14":
-            list_ships()
+            assign_crewmember_to_ship()
         elif option == "15":
+            list_ships()
+        elif option == "16":
             print("You are now exiting the Thousand Sunny⛵..... To be continued")
             sys.exit()
         else: 
