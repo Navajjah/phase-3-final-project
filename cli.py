@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from model import Base, Role, CrewMember
+from model import Base, Role, CrewMember, Ship
 import sys
 
 database = "sqlite:///strawhatcrew.db"
@@ -137,6 +137,60 @@ def view_crewmembers_by_roles():
     for crewmember in crewmembers:
         print(crewmember)
 
+def create_ship():
+    name = input("Enter Ship Name: ")
+    ship_wright = input("Enter ShipWright's Name: ")
+    max_capacity = int(input("Enter Maximum Capacity of Crew: "))
+
+    existing_ship = session.query(Ship).filter_by(name=name).first()
+    if existing_ship:
+        print(f"A ship with the name '{name}' already exists!")
+        return
+
+    ship = Ship(name=name, ship_wright=ship_wright, max_capacity=max_capacity)
+    session.add(ship)
+    session.commit()
+    print(f"🚢 Ship '{name}' has been created with ID {ship.id}!")
+
+
+def update_ship():
+    ship_id = int(input("Enter Ship ID to update: "))
+    ship = session.get(Ship, ship_id)
+
+    if not ship:
+        print(f"Ship with ID {ship_id} does not exist.")
+        return
+
+    ship.name = input(f"Enter new Ship Name (current: {ship.name}): ")
+    ship.ship_wright = input(f"Enter new Captain's Name (current: {ship.ship_wright}): ")
+    ship.max_capacity = int(input(f"Enter new Maximum Capacity (current: {ship.max_capacity}): "))
+    session.commit()
+    print(f"🚢 Ship ID {ship_id} updated successfully!")
+
+
+def delete_ship():
+    ship_id = int(input("Enter Ship ID to delete: "))
+    ship = session.get(Ship, ship_id)
+
+    if not ship:
+        print(f"Ship with ID {ship_id} does not exist.")
+        return
+
+    session.delete(ship)
+    session.commit()
+    print(f"🚢 Ship ID {ship_id} has been deleted!")
+
+
+def list_ships():
+    ships = session.query(Ship).all()
+    if not ships:
+        print("No ships found.")
+        return
+
+    for ship in ships:
+        print(ship)
+
+
 def main_menu():
     while True:
         print("\n 🌟Welcome aboard the Thousand Sunny, the ship of dreams and nakama!🌟 What would you like to do?")
@@ -150,7 +204,11 @@ def main_menu():
         print("8. List Roles")
         print("9. List CrewMembers")
         print("10. View Roles by CrewMembers")
-        print("11. Exit")
+        print("11. Create a Ship")
+        print("12. Update a ship")
+        print("13. Delete a ship")
+        print("14. List ships")
+        print("15. Exit")
         option = input("Enter your choice: ")
 
         if option == "1":
@@ -171,9 +229,15 @@ def main_menu():
             list_roles()
         elif option == "9":
             list_crewmembers()
-        elif option == "10":
-            view_crewmembers_by_roles()
         elif option == "11":
+            create_ship()
+        elif option == "12":
+            update_ship()
+        elif option == "13":
+            delete_ship()
+        elif option == "14":
+            list_ships()
+        elif option == "15":
             print("You are now exiting the Thousand Sunny⛵..... To be continued")
             sys.exit()
         else: 

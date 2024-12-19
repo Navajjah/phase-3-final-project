@@ -27,12 +27,13 @@ class CrewMember(Base):
     dream= Column(String, nullable=False)
     bounty= Column(Integer, nullable=False)
     role_id= Column(Integer, ForeignKey('roles.id'))
+    ship_id = Column(Integer, ForeignKey('ships.id')) 
 
     role = relationship('Role', back_populates='members')
     ship = relationship('Ship', back_populates='members')
     
     def __repr__(self):
-        return f"CrewMember(id = {self.id}, name ='{self.name}', ability ='{self.ability}', dream ='{self.dream}', bounty = {self.bounty}, role_id = {self.role_id})"
+        return f"CrewMember(id = {self.id}, name ='{self.name}', ability ='{self.ability}', dream ='{self.dream}', bounty = {self.bounty}, role_id = {self.role_id}, ship_id= {self.ship_id}))"
 
 class Ship(Base):
     __tablename__ = 'ships'
@@ -46,4 +47,4 @@ class Ship(Base):
     members = relationship('CrewMember', back_populates='ship') 
 
     def __repr__(self):
-        return f"Ship(id = {self.id}, name = '{self.name}', captain = '{self.captain}', max_capacity = {self.max_capacity}, description = '{self.description}')"
+        return f"Ship(id = {self.id}, name = '{self.name}', ship wright = '{self.ship_wright}', max capacity = '{self.max_capacity}')"
